@@ -1,5 +1,6 @@
 from queue import PriorityQueue
 
+
 class Algorithm:
     def dfs(graph, start, goal):
         visited = []
