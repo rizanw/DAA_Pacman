@@ -49,18 +49,14 @@ graph1 = {
 
 def dfs(graph, start, goal):
     visited = []
-    path = []
+    path = [start]
     fringe = PriorityQueue()
     fringe.put((0, start, path, visited))
-
     while not fringe.empty():
         depth, current_node, path, visited = fringe.get()
-
         if current_node == goal:
             return path + [current_node]
-
         visited = visited + [current_node]
-
         child_nodes = graph[current_node]
         for node in child_nodes:
             if node not in visited:
@@ -71,11 +67,27 @@ def dfs(graph, start, goal):
 
     return path
 
+def bfs(graph, start, goal):
+    visited = []
+    queue = [[start]]
+
+    while queue:
+        path = queue.pop(0)
+        node = path[-1]
+        if node not in visited:
+            neighbours = graph[node]
+            for neighbour in neighbours:
+                new_path = list(path)
+                new_path.append(neighbour)
+                queue.append(new_path)
+                if neighbour == goal:
+                    return new_path
+            visited.append(node)
 
 if __name__ == "__main__":
-
     path = dfs(graph, (1, 1), (6, 6))
-    path1 = dfs(graph1, (3, 3), (2, 3))
+    path2 = dfs(graph1, (1, 1), (2, 3))
+    path1 = bfs(graph1, (1, 1), (2, 3))
 
-    print("path:", path)
+    print("path:", path2)
     print("path:", path1)
